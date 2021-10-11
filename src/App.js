@@ -29,6 +29,10 @@ function App() {
 
   const [todos, setTodos] = useState(initialTodos)
 
+  /**
+   * TODOを追加する
+   * @param title {string} // TODOのタイトル
+   */
   function addTodo(title) {
     const id = getUniqId();
     const newTodo = {
@@ -39,10 +43,28 @@ function App() {
     setTodos([...todos, newTodo]);
   }
 
+  /**
+   * TODOを更新する
+   * @param complete {boolean}
+   * @param id {string}
+   */
+  function updateTodo(complete, id) {
+    const newTodos = todos.map((todo) => {
+      if (id === todo.id) {
+        return {
+          ...todo,
+          complete: complete
+        }
+      }
+      return todo;
+    })
+    setTodos(newTodos);
+  }
+
   return (
     <div className="container">
       <TodoInput onSubmit={addTodo}/>
-      <TodoList todos={todos}/>
+      <TodoList todos={todos} onClickCheck={updateTodo}/>
       <Footer/>
     </div>
   )
