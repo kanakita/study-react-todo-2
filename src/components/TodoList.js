@@ -1,22 +1,17 @@
-function TodoList({todos, onClickCheck}) {
+function TodoList() {
   return (
     <div className="list-group">
-      {todos.map(({title, complete, id}) => (
-        <TodoItem key={id} title={title} complete={complete} id={id} onClickCheck={onClickCheck} />
-      ))}
+      <TodoItem/>
     </div>
   )
 }
 
-function TodoItem({title, complete, id, onClickCheck}) {
-  function handleChange() {
-    onClickCheck(! complete, id);
-  }
+function TodoItem() {
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
       <span>
-        <input className="form-check-input me-1" type="checkbox" value="" checked={complete} onChange={handleChange} />
-        <span>{title}</span>
+        <input className="form-check-input me-1" type="checkbox" value="" />
+        <span>テキスト</span>
       </span>
       <button type="button" className="btn btn-dark">delete</button>
     </li>

@@ -1,12 +1,6 @@
-function TodoInput({onSubmit}) {
-  function handleSubmit(event) {
-    event.preventDefault();
-    onSubmit(event.target.todoTitle.value);
-    event.target.todoTitle.value = '';
-  }
-
+function TodoInput() {
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <input className="form-control" type="text" name="todoTitle"/>
     </form>
   )
