@@ -1,8 +1,8 @@
 function TodoInput({onSubmit}) {
   function handleSubmit(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    onSubmit(formData.get('todoTitle'));
+    onSubmit(event.target.todoTitle.value);
+    event.target.todoTitle.value = '';
   }
 
   return (
