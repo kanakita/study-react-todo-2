@@ -28,6 +28,8 @@ const initialTodos = [
 function App() {
   const [todos, setTodos] = useState(initialTodos);
 
+  const [currentFilter, setCurrentFilter] = useState('all');
+
 
   /**
    * TODOを追加する
@@ -74,11 +76,42 @@ function App() {
     setTodos(newTodos)
   }
 
+  /**
+   * completedのTODOを全削除する
+   */
+  function deleteCompleteAll() {
+    const newTodos = todos.filter((value) => {
+      return value.complete === false
+    })
+    setTodos(newTodos)
+  }
+
+  /**
+   * 選択したフィルター名を取得する
+   * @param filterName {string}
+   */
+  function getFilterName(filterName) {
+    setCurrentFilter(filterName)
+  }
+
+  function filteredTodos() {
+    const newTodos = todos.filter((value) => {
+      if (currentFilter === 'completed') {
+        return value.complete === true
+      }
+      else if (currentFilter === 'active') {
+        return value.complete === false
+      }
+      return true
+    })
+    setTodos(newTodos);
+  }
+
   return (
     <div className="container">
       <TodoInput onSubmit={addTodo}/>
-      <TodoList todos={todos} onClickCheck={updateTodo} onClickDelete={deleteTodo}/>
-      <Footer/>
+      <TodoList todos={filteredTodos} onClickCheck={updateTodo} onClickDelete={deleteTodo}/>
+      <Footer onClickDeleteAll={deleteCompleteAll} onClickFilter={getFilterName}/>
     </div>
   )
 }
