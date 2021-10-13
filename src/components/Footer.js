@@ -1,8 +1,8 @@
-function Footer({onClickDeleteAll, onClickFilter}) {
+function Footer({onClickDeleteAll, onClickFilter, activeFilterButtonType}) {
   return (
     <>
       <ItemCount />
-      <FilterButtons onClickFilter={onClickFilter} />
+      <FilterButtons onClickFilter={onClickFilter} activeFilterButtonType={activeFilterButtonType} />
       <DeleteButton onClickDeleteAll={onClickDeleteAll} />
     </>
   )
@@ -14,15 +14,15 @@ function ItemCount() {
   )
 }
 
-function FilterButtons({onClickFilter}) {
+function FilterButtons({onClickFilter, activeFilterButtonType}) {
   function handleClick(event) {
     onClickFilter(event.target.value)
   }
   return (
     <div className="btn-group">
-      <button className="btn btn-primary active" value="all" onClick={handleClick}>All</button>
-      <button className="btn btn-primary" value="active" onClick={handleClick}>Active</button>
-      <button className="btn btn-primary" value="completed" onClick={handleClick}>Completed</button>
+      <button className={`btn btn-primary ${activeFilterButtonType === 'all' ?  'active' : ''}`} value="all" onClick={handleClick}>All</button>
+      <button className={`btn btn-primary ${activeFilterButtonType === 'active' ?  'active' : ''}`} value="active" onClick={handleClick}>Active</button>
+      <button className={`btn btn-primary ${activeFilterButtonType === 'completed' ?  'active' : ''}`} value="completed" onClick={handleClick}>Completed</button>
     </div>
   )
 }

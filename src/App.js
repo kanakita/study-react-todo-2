@@ -110,8 +110,8 @@ function App() {
   return (
     <div className="container">
       <TodoInput onSubmit={addTodo}/>
-      <TodoList todos={filteredTodos} onClickCheck={updateTodo} onClickDelete={deleteTodo}/>
-      <Footer onClickDeleteAll={deleteCompleteAll} onClickFilter={getFilterName}/>
+      <TodoList todos={todos} onClickCheck={updateTodo} onClickDelete={deleteTodo}/>
+      <Footer onClickDeleteAll={deleteCompleteAll} onClickFilter={getFilterName} activeFilterButtonType={currentFilter}/>
     </div>
   )
 }
