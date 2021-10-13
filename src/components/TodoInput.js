@@ -1,3 +1,8 @@
+/**
+ * TODOの新規追加フォーム
+ * @param {(value: string) => void} onSubmit 入力フォームをsubmitした時に実行される関数。TODOのタイトルを渡す
+ * @returns {JSX.Element}
+ */
 function TodoInput({onSubmit}) {
   function handleSubmit(event) {
     event.preventDefault()

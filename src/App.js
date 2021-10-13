@@ -3,10 +3,24 @@ import TodoList from "./components/TodoList";
 import Footer from "./components/Footer";
 import {useState} from "react";
 
+/**
+ * ユニークな文字列を返す
+ * @returns {string} ユニークな文字列
+ */
 function getUniqId() {
   return Math.random().toString(32).substring(2);
 }
 
+/**
+ * @typedef {object} Todo        Todo オブジェクト
+ * @property {string} id         todo の ユニークなID
+ * @property {boolean} complete  完了済みかどうか
+ * @property {string} title      タイトル
+ */
+
+/**
+ * @type {Todo[]}
+ */
 const initialTodos = [
   {
     title: '遊ぶ',
@@ -33,7 +47,7 @@ function App() {
 
   /**
    * TODOを追加する
-   * @param title {string} TODOのタイトル
+   * @param {string} title TODOのタイトル
    */
   function addTodo(title) {
     const id = getUniqId();
@@ -48,8 +62,8 @@ function App() {
 
   /**
    * TODOの更新する
-   * @param complete {boolean}
-   * @param id {string}
+   * @param {boolean} complete 完了か否か
+   * @param {string} id ユニークな文字列
    */
   function updateTodo(complete, id) {
     const newTodos = todos.map(function (value) {
@@ -66,18 +80,19 @@ function App() {
 
   /**
    * TODOを削除する
-   * @param id {string}
+   * @param {string} id 削除するアイテムのID
+   *
    */
   function deleteTodo(id) {
     const newTodos = todos.filter((value) => {
       return id !== value.id
     })
-
     setTodos(newTodos)
   }
 
   /**
    * completedのTODOを全削除する
+   * completeがfalseのTODOだけの配列を作ってtodosに入れる
    */
   function deleteCompleteAll() {
     const newTodos = todos.filter((value) => {
@@ -87,31 +102,34 @@ function App() {
   }
 
   /**
-   * 選択したフィルター名を取得する
-   * @param filterName {string}
+   * 選択したフィルター名をcurrentFilterにセットする
+   * @param {string} filterName フィルターの名前
    */
-  function getFilterName(filterName) {
+  function setFilterName(filterName) {
     setCurrentFilter(filterName)
   }
 
-  function filteredTodos() {
-    const newTodos = todos.filter((value) => {
+
+  /**
+   * filterされたTODOの配列を返す
+   * @returns {Todo[]} filterされたTODOの配列
+   */
+  function getFilteredTodos() {
+    return todos.filter((value) => {
       if (currentFilter === 'completed') {
         return value.complete === true
-      }
-      else if (currentFilter === 'active') {
+      } else if (currentFilter === 'active') {
         return value.complete === false
       }
       return true
-    })
-    setTodos(newTodos);
+    });
   }
 
   return (
     <div className="container">
       <TodoInput onSubmit={addTodo}/>
-      <TodoList todos={todos} onClickCheck={updateTodo} onClickDelete={deleteTodo}/>
-      <Footer onClickDeleteAll={deleteCompleteAll} onClickFilter={getFilterName} activeFilterButtonType={currentFilter}/>
+      <TodoList todos={getFilteredTodos()} onClickCheck={updateTodo} onClickDelete={deleteTodo} filterLabel={currentFilter}/>
+      <Footer onClickDeleteAll={deleteCompleteAll} onClickFilter={setFilterName} activeFilterButtonType={currentFilter} itemNum={getFilteredTodos().length} />
     </div>
   )
 }
